@@ -1,0 +1,119 @@
+/* ─────────────────────────────────────────────────── */
+/* Animations & Transitions */
+/* ─────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────── */
+/* @keyframes Definitions */
+/* ─────────────────────────────────────────────────── */
+
+@keyframes ouroboros-fade-in {
+	0% { opacity: 0; transform: translateY(4px); }
+	100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ouroboros-slide-in-left {
+	0% { opacity: 0; transform: translateX(-6px); }
+	100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes ouroboros-scale-in {
+	0% { opacity: 0; transform: scale(0.97); }
+	100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes ouroboros-slide-up {
+	0% { opacity: 0; transform: translateY(8px); }
+	100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ouroboros-pulse {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.45; }
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Modal & Popups */
+/* ─────────────────────────────────────────────────── */
+
+.modal-container .modal,
+.prompt {
+	animation: ouroboros-scale-in 160ms ease both;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Suggestions & Menus */
+/* ─────────────────────────────────────────────────── */
+
+.suggestion-container,
+.menu {
+	animation: ouroboros-slide-up 140ms ease both;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Notice / Notification Toast */
+/* ─────────────────────────────────────────────────── */
+
+.notice {
+	animation: ouroboros-slide-up 200ms ease both;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Sidebar Leaf Pane */
+/* ─────────────────────────────────────────────────── */
+
+.workspace-split.mod-left-split .workspace-leaf,
+.workspace-split.mod-right-split .workspace-leaf {
+	animation: ouroboros-slide-in-left 180ms ease both;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Search Loading Pulse */
+/* ─────────────────────────────────────────────────── */
+
+.search-empty-state,
+.is-loading .search-result-container {
+	animation: ouroboros-pulse 1.6s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Tooltip */
+/* ─────────────────────────────────────────────────── */
+
+.tooltip {
+	animation: ouroboros-fade-in 120ms ease both;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Callout Fold Animation */
+/* ─────────────────────────────────────────────────── */
+
+.callout-content {
+	overflow: hidden;
+	transition: max-height 240ms ease, opacity 200ms ease;
+}
+
+.callout.is-collapsed .callout-content {
+	max-height: 0;
+	opacity: 0;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Respect prefers-reduced-motion */
+/* ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		animation-duration: 0.01ms;
+		animation-iteration-count: 1;
+		transition-duration: 0.01ms;
+	}
+}
+
+/* Style Settings class override: user-controlled motion reduction */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+	animation-duration: 0.01ms;
+	animation-iteration-count: 1;
+	transition-duration: 0.01ms;
+}

@@ -24,3 +24,13 @@ writeFileSync("manifest.json", JSON.stringify(manifest, null, "\t"));
 let versions = JSON.parse(readFileSync("versions.json", "utf8"));
 versions[targetVersion] = minAppVersion;
 writeFileSync("versions.json", JSON.stringify(versions, null, "\t"));
+
+// keep the version banner in the modular source and built theme in sync
+const updateThemeVersionBanner = (file) => {
+	const contents = readFileSync(file, "utf8");
+	const nextContents = contents.replace(/Version\s+\d+\.\d+\.\d+/, `Version ${targetVersion}`);
+	writeFileSync(file, nextContents);
+};
+
+updateThemeVersionBanner("src/00-header.css");
+updateThemeVersionBanner("theme.css");

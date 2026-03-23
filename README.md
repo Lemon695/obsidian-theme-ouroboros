@@ -1,95 +1,115 @@
-This is a sample theme for Obsidian ([https://obsidian.md](https://obsidian.md/)).
+# Ouroboros
 
-## First Time publishing a theme?
+[中文说明](./README_CN.md) | English
 
-### Quick start
+Ouroboros is a clean and elegant theme for [Obsidian](https://obsidian.md), inspired by the calm structure and visual restraint of Things. It is designed to feel warm, readable, and focused in both light and dark mode while still offering enough flexibility for people who want to fine-tune the interface.
 
-<img width="244" alt="Pasted image 20220822135601" src="https://user-images.githubusercontent.com/693981/186000386-4f4da987-fcaf-4aa5-aed4-e34b5901255d.png">
+## Highlights
 
-First, choose **Use this template**. That will create a copy of this repository (repo) under your Github profile. Then, you will want to _clone_ your new repository to your computer.
+- Carefully balanced light and dark palettes with a warm, paper-like visual tone
+- Refined typography, spacing, tables, callouts, code blocks, tags, and metadata styling
+- Style Settings support for accent presets, density tweaks, heading controls, and link decoration
+- Optional focused modes such as fancy code blocks, active-line highlighting, focus mode, and reduced motion
+- CJK typography options for Chinese, Japanese, and Korean note-taking
+- Custom task states, progress styling, and polish for common writing and knowledge workflows
+- Mobile-aware adjustments for a smoother experience on smaller screens
 
-Once you have the repo locally on your computer, there are a couple of placeholder fields you will need to fill in.
+## Screenshots
 
-1. Inside the `manifest.json` file, change the "name" field to whatever you want the name of your theme to be. For example:
+![](_resources/img/image-comparison-v1.png)
 
-  ```json
-  {
-    "name": "Moonstone",
-    "version": "0.0.0",
-    "minAppVersion": "1.0.0"
-  }
-  ```
+## Installation
 
-2. Also inside the manifest.json file, you can include your name under next to the "author" field.
+### From Obsidian Community Themes
 
-After you have those fields configured, all that's left to do is add your styles! All of your CSS needs to be inside the file `theme.css` which is located at root of your repository.
+1. Open **Settings** in Obsidian.
+2. Go to **Appearance** -> **Themes**.
+3. Click **Manage** and search for `Ouroboros`.
+4. Click **Install and use**.
 
-## Adding your theme to the Theme Gallery
+### Manual Installation
 
-### Add a screenshot thumbnail
+1. Download the latest release from [GitHub Releases](https://github.com/Lemon695/obsidian-theme-ouroboros/releases).
+2. Extract `theme.css` and `manifest.json`.
+3. Copy them into `.obsidian/themes/ouroboros/` inside your vault.
+4. Open **Settings** -> **Appearance** -> **Themes** and select `Ouroboros`.
 
-Inside the repository, include a screenshot thumbnail of your theme. You can name the file anything, for example `screenshot.png`. This image will be used for the small preview in the theme list.
+## Customization
 
-Your screenshot file should be `16:9` aspect ratio.
-The recommended size is 512x288.
+Ouroboros exposes a broad set of options through the Style Settings plugin and CSS variables.
 
-### Submit your theme for review
+Notable options include:
 
-To have your theme included in the Theme Gallery, you will need to submit a Pull Request to [`obsidianmd/obsidian-releases`](https://github.com/obsidianmd/obsidian-releases#community-theme).
+- Accent presets: moss, amber, and sage
+- Density presets: compact UI and airy reading
+- Link underline controls for internal and external links
+- Fancy code blocks and fancy highlight styles
+- Focus mode and reduced-motion mode
+- CJK typography and serif toggle
+- Adjustable heading sizes, weights, and colors
+- Tag, highlight, inline code, and progress color controls
 
-## Releasing Versions _(Optional)_
+## Plugin Support
 
-If your theme is getting more and more complex, you might want to start thinking about how your theme will stay compatible with different versions of Obsidian. Introduced in v0.16 of Obsidian, themes support [Github Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository). This means that you can specify which versions of your theme are compatible with which versions of Obsidian.
+Ouroboros includes dedicated styling for several commonly used community plugins, including:
 
-### Steps for releasing the initial version of your theme (1.0.0)
+- Dataview
+- Calendar
+- Tasks
+- Todoist
+- Excalidraw
+- Full Calendar
+- Hover Editor
+- Banners
+- Canvas
+- Checklist
+- Kanban
+- Outliner
+- DB Folder
+- Timeline
+- Obsidian Git
 
-1. From your theme's repository, click on "Releases".
-   
-<img width="235" alt="Pasted image 20220822145001" src="https://user-images.githubusercontent.com/693981/186000441-287a1a97-65f6-4b5f-ba66-810ceae91cd3.png">
+## Compatibility
 
-2. On the Releases page, there should be a button to **Draft a new Release**. Press it.
+- Minimum Obsidian version: `1.0.0`
+- Current theme version: `1.0.2`
+- Works in both light and dark mode
 
-<img width="202" alt="Pasted image 20220822145048" src="https://user-images.githubusercontent.com/693981/186000664-6c63ae14-f685-4d39-bfe6-324f95cd9669.png">
+## Development
 
-3. Fill out the Release information form.
-	- **Choose a Tag**: Type in the name of the version number here. At the bottom of the dropdown should be a button to create a new tag with your latest theme changes. Choose this option.
-		<img width="340" alt="Pasted image 20220822145648" src="https://user-images.githubusercontent.com/693981/186000848-bd1c2619-ea09-4e70-a886-40769cda6921.png">
-	- **Release Title**: This can be the version number.
-	- **Description** _Optional_: Anything that changed
-	- **Files:** The most important part of this form is uploading the files. You can do this by dragging 'n dropping the `manifest.json` file and the `theme.css` file your for theme inside the file upload field.
+The repository includes the modular source used to build the published theme.
 
-<img width="946" alt="Pasted image 20220822145356" src="https://user-images.githubusercontent.com/693981/186000772-e689ecea-c3b7-4e9d-9204-7ad62c0123aa.png">
+1. Clone the repository.
+2. Edit the source files in [`src/`](/Users/su/Code/Github/Lemon695/Obsidian-theme/obsidian-theme-ouroboros/src).
+3. Run `npm run build` to regenerate `theme.css`.
+4. Run `npm run check` to validate version metadata and build output.
+5. Reload Obsidian to review changes.
 
-4. Click "Publish Release."
-5. Make sure that `versions.json` is set up correctly. This file is a map.
-  ```json
-  {
-    "1.0.0": "0.16.0"
-  }
-  ```
-  
-  This means that version 1.0.0 of your theme is compatible with version 0.16.0 of Obsidian. For the initial release of your theme, you shouldn't need to make any changes to this file.
- 
-### Steps for releasing new versions
+### Source Structure
 
-Releasing a new version of your theme is the same as releasing the initial version.
+- `src/00-header.css`: theme banner and root variables
+- `src/01-foundation.css`: core palette, typography, layout, and app chrome
+- `src/02-code.css`: code blocks and syntax highlighting
+- `src/03-mobile.css`: mobile-specific adjustments
+- `src/04-tasks-and-progress.css`: custom task states and progress styling
+- `src/05-plugins-primary.css`: styling for primary plugin integrations
+- `src/06-plugins-secondary.css`: styling for secondary plugin integrations
+- `src/07-style-settings.css`: Style Settings definitions
+- `src/08-plugin-compat.css`: plugin compatibility metadata
+- `src/09-animations.css`: motion and animation controls
 
-1. From your theme's repository, click on "Releases."
-2. On the Releases page, there should be a button to **Draft a new Release**. Press it.
-3. Fill out the Release information form.
-	- **Choose a Tag**: Type in the name of the version number here. At the bottom of the dropdown should be a button to create a new tag with your latest theme changes. Choose this option.
-		<img width="333" alt="Pasted image 20220822145812" src="https://user-images.githubusercontent.com/693981/186000912-f494def9-0f67-4662-92bf-bd278082455f.png">
-	- **Release Title**: This can be the version number.
-	- **Description** _Optional_: Anything that changed
-	- **Files:** The most important part of this form is uploading the files. You can do this by dragging 'n dropping the `manifest.json` file and the `theme.css` file your for theme inside the file upload field.
+## Contributing
 
-4. Click "Publish Release."
-5. Update the `versions.json` file in your repository. For the initial release of your theme, you probably didn't need to make any changes to the `versions.json` file. When you release subsequent versions of your theme; however, it's best practice to include the new version as entry in the versions.json file. So this might look like:
-  ```json
-  {  
-		"1.0.0": "0.16.0",
-		"1.0.1": "0.16.0"
-  }
-  ```
+Issues and pull requests are welcome. If you spot a bug, visual regression, or plugin compatibility issue, feel free to open an issue with screenshots and reproduction details.
 
-  What's important to note here is: the new version is included as the "key" and the "value" is the minimum version of Obsidian that your theme compatible with. So if the new version of your theme is only compatible with an Insider version of Obsidian, it's important to set this value accordingly. This will prevent users on older versions of Obsidian from updating to the newer version of your theme.
+## Credits
+
+Ouroboros draws inspiration from:
+
+- [Things Theme](https://github.com/colineckert/obsidian-things) by @colineckert
+- [Things App](https://culturedcode.com/things/) by Cultured Code
+- [Flexoki](https://github.com/kepano/flexoki) by @kepano for the warm, ink-friendly color system
+
+## License
+
+Released under the [MIT License](LICENSE).
