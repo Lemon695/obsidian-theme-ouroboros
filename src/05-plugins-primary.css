@@ -1,0 +1,919 @@
+/* ─────────────────────────────────────────────────── */
+/* Plugins */
+/* ─────────────────────────────────────────────────── */
+
+/* --------------- */
+/* Dataview */
+/* --------------- */
+
+.block-language-dataview,
+.block-language-dataviewjs,
+.dataview {
+	border-radius: var(--radius-m);
+}
+
+.dataview {
+	margin: 0.95rem 0 1.1rem;
+}
+
+.dataview.table-view-table,
+.block-language-dataview table,
+.block-language-dataviewjs table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	border: var(--thin-border);
+	border-radius: var(--radius-m);
+	overflow: hidden;
+	background-color: var(--background-primary);
+}
+
+.dataview.table-view-table thead,
+.block-language-dataview thead,
+.block-language-dataviewjs thead {
+	background-color: var(--background-primary-alt);
+}
+
+.dataview.table-view-table thead th,
+.block-language-dataview thead th,
+.block-language-dataviewjs thead th {
+	color: var(--text-normal);
+	font-weight: 650;
+	letter-spacing: 0.01em;
+	text-align: left;
+}
+
+.dataview.table-view-table :is(th, td),
+.block-language-dataview :is(th, td),
+.block-language-dataviewjs :is(th, td) {
+	padding: 0.65rem 0.8rem;
+	border-right: 1px solid var(--background-modifier-border);
+	border-bottom: 1px solid var(--background-modifier-border);
+	vertical-align: top;
+}
+
+.dataview.table-view-table :is(th, td):last-child,
+.block-language-dataview :is(th, td):last-child,
+.block-language-dataviewjs :is(th, td):last-child {
+	border-right: none;
+}
+
+.dataview.table-view-table tbody tr:last-child td,
+.block-language-dataview tbody tr:last-child td,
+.block-language-dataviewjs tbody tr:last-child td {
+	border-bottom: none;
+}
+
+.dataview.table-view-table tbody tr:nth-child(even),
+.block-language-dataview tbody tr:nth-child(even),
+.block-language-dataviewjs tbody tr:nth-child(even) {
+	background-color: var(--background-primary-alt);
+}
+
+.dataview.table-view-table tbody tr:hover,
+.block-language-dataview tbody tr:hover,
+.block-language-dataviewjs tbody tr:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.dataview.inline-field-key,
+.dataview.result-group-title {
+	color: var(--text-muted);
+	font-weight: 600;
+}
+
+.dataview.inline-field {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	margin: 0.1rem 0.3rem 0.1rem 0;
+}
+
+.dataview.inline-field-value {
+	background-color: var(--background-primary-alt);
+	border-radius: var(--radius-s);
+	padding: 0.05rem 0.4rem;
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--background-modifier-border) 72%, transparent);
+}
+
+.dataview.list-view-ul,
+.dataview.result-group {
+	padding-left: 1rem;
+}
+
+.dataview.result-group {
+	background-color: color-mix(in srgb, var(--background-primary-alt) 72%, transparent);
+	border: var(--thin-border);
+	border-radius: var(--radius-m);
+	margin: 0.8rem 0;
+	padding: 0.7rem 0.85rem 0.55rem;
+}
+
+.dataview.result-group-title {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-size: 0.86rem;
+	letter-spacing: 0.04em;
+	margin-bottom: 0.45rem;
+	text-transform: uppercase;
+}
+
+.dataview.result-group-title::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 999px;
+	background-color: rgba(var(--color-blue-rgb), 0.55);
+}
+
+.dataview.list-view-ul > li,
+.dataview.task-list-basic-item {
+	border-radius: var(--radius-s);
+	padding: 0.28rem 0.45rem;
+	transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.dataview.list-view-ul > li:hover,
+.dataview.task-list-basic-item:hover {
+	background-color: var(--background-modifier-hover);
+	transform: translateX(1px);
+}
+
+.dataview.small-text,
+.dataview-error {
+	color: var(--text-muted);
+}
+
+.dataview.small-text {
+	font-size: 0.86rem;
+}
+
+.dataview-error-box {
+	border: var(--thin-border);
+	border-radius: var(--radius-m);
+	background-color: var(--background-primary-alt);
+	padding: 0.75rem 0.9rem;
+}
+
+.dataview-error-box pre {
+	margin-top: 0.65rem;
+}
+
+.dataview :is(.task-list-item, .dataview-task-list-item) input[type='checkbox'] {
+	margin-right: 0.45rem;
+}
+
+.dataview :is(.task-list-item, .dataview-task-list-item) .task-list-item-description {
+	color: var(--text-normal);
+}
+
+.dataview .contains-task-list {
+	margin-top: 0.4rem;
+}
+
+/* Completed tasks: muted text + line-through */
+.dataview :is(.task-list-item, .dataview-task-list-item).is-checked .task-list-item-description,
+.dataview :is(.task-list-item, .dataview-task-list-item)[data-task='x'] .task-list-item-description,
+.dataview :is(.task-list-item, .dataview-task-list-item)[data-task='X'] .task-list-item-description {
+	color: var(--text-faint);
+	text-decoration: line-through;
+	text-decoration-color: var(--text-faint);
+}
+
+/* ── Table: sticky header for tall tables ── */
+.dataview.table-view-table thead th,
+.block-language-dataview thead th,
+.block-language-dataviewjs thead th {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	background-color: var(--background-primary-alt);
+}
+
+/* ── Table: sort indicator column ── */
+.dataview.table-view-table thead th.sorted,
+.dataview.table-view-table thead th[aria-sort],
+.block-language-dataview thead th.sorted {
+	color: var(--text-accent);
+}
+
+.dataview.table-view-table thead th.sorted::after,
+.block-language-dataview thead th.sorted::after {
+	content: " ↑";
+	font-size: 0.75em;
+	opacity: 0.7;
+}
+
+.dataview.table-view-table thead th.sorted.desc::after,
+.block-language-dataview thead th.sorted.desc::after {
+	content: " ↓";
+}
+
+/* ── Table: links in cells inherit theme accent ── */
+.dataview.table-view-table td a.internal-link,
+.block-language-dataview td a.internal-link,
+.block-language-dataviewjs td a.internal-link {
+	color: var(--text-accent);
+	text-decoration: none;
+}
+
+.dataview.table-view-table td a.internal-link:hover,
+.block-language-dataview td a.internal-link:hover {
+	text-decoration: underline;
+	color: var(--text-accent-hover);
+}
+
+/* Unresolved links: faint color */
+.dataview.table-view-table td a.internal-link.is-unresolved,
+.block-language-dataview td a.internal-link.is-unresolved {
+	color: var(--text-faint);
+}
+
+/* ── Table: tags in cells ── */
+.dataview.table-view-table td .tag,
+.block-language-dataview td .tag,
+.block-language-dataviewjs td .tag {
+	background-color: var(--tag-background-color-l);
+	color: var(--tag-font-color-l);
+	border-radius: 999px;
+	font-size: 0.8em;
+	padding: 0.08em 0.5em;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.theme-dark .dataview.table-view-table td .tag,
+.theme-dark .block-language-dataview td .tag {
+	background-color: var(--tag-background-color-d);
+	color: var(--tag-font-color-d);
+}
+
+/* ── Table: number columns right-align ── */
+.dataview.table-view-table td.dataview-td-number,
+.block-language-dataview td.dataview-td-number {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: "tnum";
+}
+
+/* ── Table: date chips ── */
+.dataview.table-view-table td .dataview-date,
+.block-language-dataview td .dataview-date {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3em;
+	background-color: rgba(var(--color-blue-rgb), 0.08);
+	border-radius: var(--radius-xs);
+	color: var(--color-blue);
+	font-size: 0.88em;
+	padding: 0.05em 0.45em;
+	white-space: nowrap;
+}
+
+.theme-dark .dataview.table-view-table td .dataview-date,
+.theme-dark .block-language-dataview td .dataview-date {
+	background-color: rgba(var(--color-blue-rgb), 0.12);
+}
+
+/* ── Table: scrollable wrapper for narrow views ── */
+/* Overflow is set on the block-language container, not the table itself */
+.block-language-dataview,
+.block-language-dataviewjs {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* ── Empty query result state ── */
+.dataview-empty,
+.block-language-dataview .dataview-empty,
+.block-language-dataviewjs .dataview-empty {
+	color: var(--text-faint);
+	font-style: italic;
+	font-size: 0.9em;
+	padding: 0.8rem 1rem;
+	border: 1px dashed var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	text-align: center;
+}
+
+/* ── List view: nested indentation guide ── */
+.dataview.list-view-ul ul {
+	border-left: 2px solid color-mix(in srgb, var(--background-modifier-border) 60%, transparent);
+	margin-left: 0.4rem;
+	padding-left: 0.85rem;
+}
+
+/* ── Inline field: clearer key vs value distinction ── */
+.dataview.inline-field-key {
+	font-size: 0.8em;
+	letter-spacing: 0.035em;
+	text-transform: uppercase;
+	opacity: 0.8;
+}
+
+.dataview.inline-field:hover .dataview.inline-field-value {
+	box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--interactive-accent) 40%, transparent);
+}
+
+/* ── Result group: nested groups ── */
+.dataview.result-group .dataview.result-group {
+	background-color: color-mix(in srgb, var(--background-primary-alt) 50%, transparent);
+	border-color: color-mix(in srgb, var(--background-modifier-border) 50%, transparent);
+	margin: 0.5rem 0;
+}
+
+/* ── Loading / computing state ── */
+.dataview.dataview-loading {
+	color: var(--text-faint);
+	font-style: italic;
+	animation: ouroboros-pulse 1.5s ease-in-out infinite;
+}
+
+/* --------------- */
+/* Calendar */
+/* --------------- */
+
+.calendar {
+	padding: 0.35rem;
+	background-color: var(--background-primary);
+	border: var(--thin-border);
+	border-radius: var(--radius-l);
+}
+
+.calendar .month {
+	color: var(--text-normal);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.calendar button {
+	border-radius: var(--radius-s);
+	box-shadow: none;
+}
+
+.calendar button:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.calendar .week-num,
+.calendar .day {
+	border-radius: var(--radius-s);
+	color: var(--text-muted);
+}
+
+.calendar .day:hover,
+.calendar .week-num:hover {
+	background-color: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+.calendar .today {
+	background-color: rgba(var(--color-blue-rgb), 0.12);
+	color: var(--text-accent);
+	font-weight: 700;
+}
+
+.calendar .active,
+.calendar .selected {
+	background-color: var(--interactive-accent);
+	color: white;
+}
+
+.calendar .note {
+	box-shadow: inset 0 -2px 0 rgba(var(--color-orange-rgb), 0.55);
+}
+
+/* --------------- */
+/* Tasks */
+/* --------------- */
+
+.tasks-group-heading {
+	display: flex;
+	align-items: center;
+	gap: 0.55rem;
+	color: var(--text-normal);
+	font-weight: 700;
+	margin-top: 1.15rem;
+	margin-bottom: 0.45rem;
+	padding-bottom: 0.35rem;
+	border-bottom: 1px solid color-mix(in srgb, var(--background-modifier-border) 88%, transparent);
+}
+
+.tasks-group-heading::before {
+	content: "";
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 999px;
+	background-color: rgba(var(--color-blue-rgb), 0.6);
+}
+
+.tasks-count,
+.tasks-backlink,
+.tasks-edit,
+.tasks-postpone,
+.tasks-due,
+.tasks-start,
+.tasks-scheduled,
+.tasks-done,
+.tasks-recurring {
+	color: var(--text-muted);
+}
+
+.tasks-backlink a,
+.tasks-edit a,
+.tasks-postpone a,
+.tasks-due a,
+.tasks-start a,
+.tasks-scheduled a,
+.tasks-done a,
+.tasks-recurring a {
+	color: inherit;
+}
+
+.tasks-backlink:hover,
+.tasks-edit:hover,
+.tasks-postpone:hover,
+.tasks-due:hover,
+.tasks-start:hover,
+.tasks-scheduled:hover,
+.tasks-done:hover,
+.tasks-recurring:hover {
+	color: var(--text-normal);
+}
+
+.tasks-layout {
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.tasks-layout :is(.tasks-due, .tasks-start, .tasks-scheduled, .tasks-done, .tasks-recurring) {
+	background-color: var(--background-primary-alt);
+	border: 1px solid color-mix(in srgb, var(--background-modifier-border) 78%, transparent);
+	border-radius: 999px;
+	font-size: 0.82rem;
+	padding: 0.08rem 0.48rem;
+}
+
+.tasks-layout .priority {
+	color: var(--text-accent);
+	font-weight: 600;
+}
+
+.tasks-backlink,
+.tasks-edit,
+.tasks-postpone {
+	border-radius: 999px;
+	padding: 0.08rem 0.45rem;
+	transition: background-color 120ms ease, color 120ms ease;
+}
+
+.tasks-backlink:hover,
+.tasks-edit:hover,
+.tasks-postpone:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.plugin-tasks-query-result {
+	margin: 1rem 0 1.1rem;
+}
+
+.plugin-tasks-query-result > ul,
+.plugin-tasks-query-result .contains-task-list {
+	margin-top: 0.4rem;
+}
+
+.plugin-tasks-query-result .tasks-list-text,
+.plugin-tasks-query-result .tasks-list-text span {
+	color: var(--text-normal);
+}
+
+.plugin-tasks-query-result .tasks-count {
+	background-color: var(--background-primary-alt);
+	border-radius: 999px;
+	padding: 0.08rem 0.45rem;
+}
+
+.contains-task-list .task-list-item {
+	border-radius: var(--radius-s);
+	padding-block: 0.14rem;
+	padding-right: 0.3rem;
+	transition: background-color 120ms ease, transform 120ms ease;
+}
+
+.contains-task-list .task-list-item:hover {
+	background-color: var(--background-modifier-hover);
+	transform: translateX(1px);
+}
+
+/* --------------- */
+/* Todoist */
+/* --------------- */
+
+.todoist-p1 > input[type='checkbox'] {
+	border: 1px solid #ff757f !important;
+	background-color: rgba(255, 117, 127, 0.25) !important;
+}
+
+.todoist-p1 > input[type='checkbox']:hover {
+	background-color: rgba(255, 117, 127, 0.5) !important;
+}
+
+.todoist-p2 > input[type='checkbox'] {
+	border: 1px solid #ffc777 !important;
+	background-color: rgba(255, 199, 119, 0.25) !important;
+}
+
+.todoist-p2 > input[type='checkbox']:hover {
+	background-color: rgba(255, 199, 119, 0.5) !important;
+}
+
+.todoist-p3 > input[type='checkbox'] {
+	border: 1px solid #65bcff !important;
+	background-color: rgba(101, 188, 255, 0.25) !important;
+}
+
+.todoist-p3 > input[type='checkbox']:hover {
+	background-color: rgba(101, 188, 255, 0.5) !important;
+}
+
+.todoist-p4 > input[type='checkbox'] {
+	border: 1px solid #b4c2f0 !important;
+	background-color: rgba(180, 194, 240, 0.25) !important;
+}
+
+.todoist-p4 > input[type='checkbox']:hover {
+	background-color: rgba(180, 194, 240, 0.5) !important;
+}
+
+.task-metadata {
+	font-size: var(--font-todoist-metadata-size);
+	color: #7a88cf;
+	margin-left: unset;
+}
+
+.task-metadata > * {
+	margin-right: 30px;
+}
+
+.task-date.task-overdue {
+	color: rgba(255, 152, 164, 0.75) !important;
+}
+
+.task-calendar-icon,
+.task-project-icon,
+.task-labels-icon {
+	vertical-align: middle;
+	height: 17px;
+	width: 17px;
+}
+
+.todoist-project .todoist-project {
+	margin-left: 20px;
+}
+
+.todoist-section {
+	margin-left: 20px;
+}
+
+.todoist-project .todoist-project-title {
+	font-weight: 700;
+	margin-block-end: 0px;
+}
+
+.todoist-section .todoist-section-title {
+	font-size: var(--font-todoist-title-size);
+	color: #7a88cf;
+	font-weight: 700;
+	margin-block-end: 0px;
+}
+
+.todoist-error {
+	border: 1px solid #ff98a4;
+	background-color: rgba(255, 152, 164, 0.05);
+	padding: 1em 1em;
+	margin: 1em 0px;
+}
+
+.todoist-error p {
+	margin: 0 0 1em 0;
+	font-weight: 600;
+}
+
+.todoist-error code {
+	background-color: unset !important;
+	padding: unset !important;
+	margin: unset !important;
+}
+
+.todoist-success {
+	border: 1px solid #c3e88d !important;
+	background-color: rgba(195, 232, 141, 0.05);
+	padding: 1em 1em !important;
+	margin: 1em 0px;
+}
+
+.todoist-success p {
+	margin: 0;
+	font-weight: 600;
+}
+
+/* .priority-container .priority-1 {
+  color: #ff98a4;
+}
+.priority-container .priority-2 {
+  color: #ffc777;
+}
+.priority-container .priority-3 {
+  color: #65bcff;
+}
+.priority-container .priority-4 {
+  color: #b4c2f0;
+} */
+
+/* ─────────────────────────────────────────────────── */
+/* Excalidraw */
+/* ─────────────────────────────────────────────────── */
+
+.excalidraw-plugin,
+.excalidraw-wrapper {
+	border-radius: var(--radius-m);
+	overflow: hidden;
+}
+
+.excalidraw .Island {
+	background-color: var(--background-primary-alt);
+	border: var(--thin-border);
+	border-radius: var(--radius-m);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.theme-dark .excalidraw .Island {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.excalidraw .App-toolbar {
+	background-color: var(--background-primary-alt);
+	border: var(--thin-border);
+	border-radius: var(--radius-l);
+}
+
+.excalidraw .ToolIcon.ToolIcon__keybinding {
+	color: var(--text-faint);
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Full Calendar */
+/* ─────────────────────────────────────────────────── */
+
+.fc .fc-toolbar-title {
+	color: var(--text-normal);
+	font-size: 1.1em;
+	font-weight: 600;
+}
+
+.fc .fc-button {
+	background-color: var(--background-primary-alt);
+	border: var(--thin-border);
+	border-radius: var(--radius-s);
+	color: var(--text-muted);
+}
+
+.fc .fc-button:hover {
+	background-color: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active {
+	background-color: var(--interactive-accent);
+	border-color: var(--interactive-accent);
+	color: white;
+}
+
+.fc-theme-standard .fc-scrollgrid,
+.fc-theme-standard td,
+.fc-theme-standard th {
+	border-color: var(--background-modifier-border);
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+	background-color: rgba(var(--color-blue-rgb), 0.06);
+}
+
+.fc .fc-daygrid-day-number {
+	color: var(--text-muted);
+}
+
+.fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+	background-color: var(--interactive-accent);
+	border-radius: 999px;
+	color: white;
+	padding: 2px 6px;
+}
+
+.fc .fc-col-header-cell-cushion {
+	color: var(--text-muted);
+	font-weight: 600;
+	font-size: 0.8em;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.fc .fc-daygrid-day.fc-day-sat .fc-daygrid-day-number,
+.fc .fc-daygrid-day.fc-day-sun .fc-daygrid-day-number {
+	color: var(--color-red);
+}
+
+.fc-event {
+	background-color: rgba(var(--color-blue-rgb), 0.15);
+	border: none;
+	border-radius: var(--radius-xs);
+	color: var(--interactive-accent);
+	font-size: 0.82em;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Hover Editor */
+/* ─────────────────────────────────────────────────── */
+
+.popover.hover-editor {
+	background-color: var(--background-primary);
+	border: var(--thin-border);
+	border-radius: var(--radius-l);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.theme-dark .popover.hover-editor {
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.popover.hover-editor .view-header {
+	background-color: var(--background-primary-alt);
+	border-bottom: var(--thin-border);
+	border-top-left-radius: var(--radius-l);
+	border-top-right-radius: var(--radius-l);
+}
+
+.popover.hover-editor .view-header-title {
+	color: var(--text-muted);
+	font-size: 0.88em;
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Obsidian Banners Plugin */
+/* ─────────────────────────────────────────────────── */
+
+.obsidian-banner-wrapper {
+	border-radius: var(--radius-m);
+	overflow: hidden;
+}
+
+.obsidian-banner-image-wrapper img {
+	-webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+}
+
+/* Ensure note title is readable over banner */
+.obsidian-banner-wrapper + .inline-title,
+.obsidian-banner-wrapper ~ .inline-title {
+	text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ─────────────────────────────────────────────────── */
+/* Canvas View */
+/* ─────────────────────────────────────────────────── */
+
+/* Canvas background: dot-grid pattern */
+.canvas-wrapper {
+	background-color: var(--background-secondary);
+	background-image: radial-gradient(
+		circle,
+		color-mix(in srgb, var(--background-modifier-border) 80%, transparent) 1px,
+		transparent 1px
+	);
+	background-size: 24px 24px;
+}
+
+/* Canvas node card */
+.canvas-node {
+	background-color: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-m);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+	transition: box-shadow 160ms ease, border-color 160ms ease;
+}
+
+.theme-dark .canvas-node {
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3), 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Selected / focused node */
+.canvas-node.is-focused,
+.canvas-node.is-selected {
+	border-color: var(--interactive-accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--interactive-accent) 30%, transparent),
+		0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Node label / title */
+.canvas-node-label {
+	color: var(--text-normal);
+	font-size: 0.88em;
+	font-weight: 500;
+}
+
+/* Node resize handle */
+.canvas-node-resize-handle {
+	background-color: var(--interactive-accent);
+	border-radius: 999px;
+	opacity: 0;
+	transition: opacity 120ms ease;
+}
+
+.canvas-node:hover .canvas-node-resize-handle,
+.canvas-node.is-focused .canvas-node-resize-handle {
+	opacity: 0.75;
+}
+
+/* Canvas edge / connection line */
+.canvas-edge path {
+	stroke: var(--background-modifier-border);
+	stroke-width: 2;
+}
+
+.canvas-edge.is-selected path,
+.canvas-edge:hover path {
+	stroke: var(--interactive-accent);
+}
+
+/* Canvas edge arrow head */
+.canvas-edge .canvas-edge-end-marker path {
+	fill: var(--background-modifier-border);
+}
+
+.canvas-edge.is-selected .canvas-edge-end-marker path,
+.canvas-edge:hover .canvas-edge-end-marker path {
+	fill: var(--interactive-accent);
+}
+
+/* Canvas toolbar / controls */
+.canvas-controls {
+	background-color: var(--background-primary);
+	border: var(--thin-border);
+	border-radius: var(--radius-l);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.canvas-controls .clickable-icon {
+	color: var(--text-muted);
+	border-radius: var(--radius-s);
+	transition: background-color 120ms ease, color 120ms ease;
+}
+
+.canvas-controls .clickable-icon:hover {
+	background-color: var(--background-modifier-hover);
+	color: var(--text-normal);
+}
+
+/* Canvas toolbar menu */
+.canvas-menu {
+	background-color: var(--background-primary);
+	border: var(--thin-border);
+	border-radius: var(--radius-m);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Canvas minimap */
+.canvas-minimap {
+	background-color: var(--background-secondary);
+	border: var(--thin-border);
+	border-radius: var(--radius-s);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	opacity: 0.85;
+}
+
+.canvas-minimap:hover {
+	opacity: 1;
+}
+
+/* Canvas minimap viewport indicator */
+.canvas-minimap-viewport {
+	border: 1px solid var(--interactive-accent);
+	background-color: color-mix(in srgb, var(--interactive-accent) 12%, transparent);
+	border-radius: 2px;
+}
+
+/* Canvas group frame */
+.canvas-node.canvas-node-group {
+	background-color: color-mix(in srgb, var(--background-secondary) 70%, transparent);
+	border: 1.5px dashed var(--background-modifier-border);
+	border-radius: var(--radius-l);
+	box-shadow: none;
+}
+
+.canvas-node.canvas-node-group.is-focused,
+.canvas-node.canvas-node-group.is-selected {
+	border-color: var(--interactive-accent);
+	border-style: dashed;
+}

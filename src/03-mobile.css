@@ -1,0 +1,50 @@
+/* --------------------- */
+/* Mobile toolbar button */
+/* --------------------- */
+
+body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
+.view-action:nth-last-of-type(2),
+body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
+.view-action:nth-last-of-type(2) {
+	color: white;
+	background-color: var(--interactive-accent);
+	opacity: 1;
+	display: flex;
+	padding: 5px;
+	position: fixed;
+	right: calc(16px + env(safe-area-inset-right));
+	bottom: calc(24px + env(safe-area-inset-bottom));
+	justify-content: center;
+	align-items: center;
+	width: 53px;
+	height: 53px;
+	border-radius: 50% !important;
+	box-shadow: 1.1px 0.3px 2.2px rgba(0, 0, 0, 0.02),
+	2.7px 0.7px 5.3px rgba(0, 0, 0, 0.028), 5px 1.3px 10px rgba(0, 0, 0, 0.035),
+	8.9px 2.2px 17.9px rgba(0, 0, 0, 0.042),
+	16.7px 4.2px 33.4px rgba(0, 0, 0, 0.05), 40px 10px 80px rgba(0, 0, 0, 0.07);
+}
+
+body.is-mobile:not(.floating-button-off).advanced-toolbar
+.view-action:nth-last-of-type(2),
+body.is-mobile:not(.floating-button-off).advanced-toolbar
+.view-action:nth-last-of-type(2) {
+	color: white;
+	background-color: var(--interactive-accent);
+	opacity: 1;
+	position: fixed;
+	display: flex;
+	padding: 5px;
+	right: calc(16px + env(safe-area-inset-right));
+	bottom: calc(96px + env(safe-area-inset-bottom));
+	justify-content: center;
+	align-items: center;
+	width: 53px;
+	height: 53px;
+	border-radius: 50% !important;
+	box-shadow: 1.1px 0.3px 2.2px rgba(0, 0, 0, 0.02),
+	2.7px 0.7px 5.3px rgba(0, 0, 0, 0.028), 5px 1.3px 10px rgba(0, 0, 0, 0.035),
+	8.9px 2.2px 17.9px rgba(0, 0, 0, 0.042),
+	16.7px 4.2px 33.4px rgba(0, 0, 0, 0.05), 40px 10px 80px rgba(0, 0, 0, 0.07);
+}
+

@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+/*───────────────────────────────────────────────────────
+OUROBOROS
+Version 1.0.2
+Created by Lemon695
+
+Inspired by Things theme (@colineckert)
+
+Repository:
+https://github.com/Lemon695/obsidian-theme-ouroboros
+
+A clean and elegant theme featuring carefully crafted
+color schemes for both light and dark modes.
+────────────────────────────────────────────────────── */
+
+/* ─────────────────────────────────────────────────── */
+/* Main Theme Styling */
+/* ─────────────────────────────────────────────────── */
+
+body {
+	--background-primary: #FFFCF0;
+	--background-primary-alt: #F2F0E5;
+	--background-secondary: #F2F0E5;
+	--background-secondary-alt: #E6E4D9;
+	--background-modifier-border: #DAD8CE;
+
+	/* Text Colors */
+	--text-normal: #100F0F;
+	--text-muted: #6F6E69;
+	--text-faint: #B7B5AC;
+
+	/* Accent Colors */
+	--text-accent: #205EA6;
+	--text-accent-hover: #4385BE;
+
+	/* Headers */
+	--h1-color: var(--text-normal);
+	--h2-color: var(--text-normal);
+	--h3-color: var(--text-normal);
+	--h4-color: var(--text-normal);
+	--h5-color: var(--text-normal);
+	--h6-color: var(--text-muted);
+
+	/* Interface Elements */
+	--background-modifier-hover: rgba(16,15,15,0.05);
+	--interactive-accent: #205EA6;
+	--interactive-accent-hover: #4385BE;
+
+	/* Editor Settings */
+	--font-text-theme: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica", "Arial", sans-serif;
+	--font-editor-theme: var(--font-text-theme);
+	--font-monospace-theme: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
+	--font-interface-theme: var(--font-text-theme);
+
+	--h1-size: clamp(1.7em, 1.55em + 0.3vw, 1.95em);
+	--h2-size: clamp(1.42em, 1.32em + 0.22vw, 1.6em);
+	--h3-size: clamp(1.22em, 1.15em + 0.16vw, 1.34em);
+	--h4-size: clamp(1.08em, 1.03em + 0.1vw, 1.16em);
+	--h5-size: clamp(1em, 0.98em + 0.05vw, 1.05em);
+	--h6-size: clamp(0.9em, 0.88em + 0.03vw, 0.95em);
+
+	/* Spacing & Layout */
+	--line-width: 42rem;
+	--line-height: 1.66;
+	--max-width: 88%;
+	--radius-s: 4px;
+	--radius-xs: 3px;
+	--radius-m: 8px;
+	--radius-l: 10px;
+	--radius-xl: 16px;
+	--thin-border: 1px solid var(--background-modifier-border);
+	--color-accent: var(--interactive-accent);
+	--blue: var(--interactive-accent);
+	--code-background: var(--background-primary-alt);
+	--text-formatted: var(--text-faint);
+	--normal-weight: 400;
+	--checkbox-radius: var(--radius-s);
+	--font-adaptive-small: var(--font-ui-small);
+	--input-height: 32px;
+
+	/* Style Settings defaults */
+	--link-decoration: underline;
+	--link-external-decoration: underline;
+	--text-highlight-bg-l: rgba(255, 208, 0, 0.4);
+	--text-highlight-bg-d: rgba(255, 208, 0, 0.4);
+	--strong-color: #FF82B2;
+	--em-color: #FF82B2;
+	--quote-color: #3EB4BF;
+	--code-normal: #5C6773;
+	--code-color-d: #D7DBE0;
+	--tag-background-color-l: #BDE1D3;
+	--tag-font-color-l: #1D694B;
+	--tag-background-color-d: #1D694B;
+	--tag-font-color-d: #FFFFFF;
+	--progress-color-1: #ad5758;
+	--progress-color-2: #b87f4c;
+	--progress-color-3: #d2b874;
+	--progress-color-4: #b0c07e;
+	--progress-color-5: #768399;
+	--h1-weight: 700;
+	--h2-weight: 700;
+	--h3-weight: 600;
+	--h4-weight: 500;
+	--h5-weight: 500;
+	--h6-weight: 400;
+	--h4-transform: uppercase;
+	--accent-moss: #5F7F52;
+	--accent-moss-hover: #78966C;
+	--accent-amber: #A56A1B;
+	--accent-amber-hover: #C48735;
+	--accent-sage: #4D7C6F;
+	--accent-sage-hover: #65A090;
+
+	/* CJK Font Stacks */
+	--font-cjk-sc: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+	--font-cjk-serif: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+}
