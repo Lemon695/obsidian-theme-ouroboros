@@ -2,11 +2,12 @@
 /* Mobile toolbar button */
 /* --------------------- */
 
-body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
-.view-action:nth-last-of-type(2),
+/* Fragile: Obsidian mobile does not expose a stable compose/new-note class here.
+ * Re-check this selector against the current mobile DOM before release.
+ */
 body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
 .view-action:nth-last-of-type(2) {
-	color: white;
+	color: var(--text-on-accent);
 	background-color: var(--interactive-accent);
 	opacity: 1;
 	display: flex;
@@ -26,10 +27,8 @@ body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
 }
 
 body.is-mobile:not(.floating-button-off).advanced-toolbar
-.view-action:nth-last-of-type(2),
-body.is-mobile:not(.floating-button-off).advanced-toolbar
 .view-action:nth-last-of-type(2) {
-	color: white;
+	color: var(--text-on-accent);
 	background-color: var(--interactive-accent);
 	opacity: 1;
 	position: fixed;

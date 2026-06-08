@@ -1,10 +1,18 @@
 /* ─────────────────────────────────────────────────── */
-/* Plugin Compatibility info for the Obsidian Hub */
+/* Plugin Compatibility info for Obsidian Hub / theme metadata */
 /* ─────────────────────────────────────────────────── */
+
+/* Keep this list conservative. It should contain official core/community ids
+ * with direct theme coverage or a documented selector-level compatibility pass.
+ * Keep this list conservative and based on direct theme coverage or stable selector evidence.
+ */
 
 /* @plugins
 core:
 - backlink
+- bases
+- bookmarks
+- canvas
 - command-palette
 - file-explorer
 - global-search
@@ -22,19 +30,18 @@ core:
 - sync
 - word-count
 community:
-- sliding-panes-obsidian
-- obsidian-codemirror-options
-- obsidian-kanban
 - dataview
-- obsidian-hider
 - calendar
-- mysnippets-plugin
-- cmenu-plugin
-- obsidian-outliner
-- readwise-official
-- tag-wrangler
+- obsidian-full-calendar
+- obsidian-tasks-plugin
 - todoist-sync-plugin
-- templater-obsidian
-- obsidian-system-dark-mode
+- obsidian-excalidraw-plugin
+- obsidian-hover-editor
+- obsidian-banners
+- obsidian-checklist-plugin
+- obsidian-kanban
+- obsidian-outliner
+- obsidian-timeline
+- obsidian-git
 - obsidian-style-settings
 */

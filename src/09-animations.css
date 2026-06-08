@@ -68,11 +68,17 @@
 
 /* ─────────────────────────────────────────────────── */
 /* Search Loading Pulse */
+/* M9-6 audit: the infinite pulse is scoped to the transient loading state
+   only. The persistent empty state gets a one-shot fade-in instead, so we
+   never run a forever-repainting animation on an always-visible element. */
 /* ─────────────────────────────────────────────────── */
 
-.search-empty-state,
 .is-loading .search-result-container {
 	animation: ouroboros-pulse 1.6s ease-in-out infinite;
+}
+
+.search-empty-state {
+	animation: ouroboros-fade-in 200ms ease both;
 }
 
 /* ─────────────────────────────────────────────────── */
@@ -99,21 +105,34 @@
 
 /* ─────────────────────────────────────────────────── */
 /* Respect prefers-reduced-motion */
+/* M9-6: both the OS preference and the user toggle neutralize duration,
+   force infinite animations (loading pulses) to a single iteration, and
+   disable smooth scrolling defensively. */
 /* ─────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
 	*, *::before, *::after {
-		animation-duration: 0.01ms;
-		animation-iteration-count: 1;
-		transition-duration: 0.01ms;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
 	}
 }
 
 /* Style Settings class override: user-controlled motion reduction */
+body.reduce-motion {
+	scroll-behavior: auto;
+}
+
 body.reduce-motion *,
 body.reduce-motion *::before,
 body.reduce-motion *::after {
-	animation-duration: 0.01ms;
-	animation-iteration-count: 1;
-	transition-duration: 0.01ms;
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	transition-duration: 0.01ms !important;
+	scroll-behavior: auto !important;
 }

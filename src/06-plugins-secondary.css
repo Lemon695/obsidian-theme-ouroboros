@@ -281,13 +281,13 @@ body .kanban-plugin__item-form .kanban-plugin__item-input-wrapper {
 .git-source-control-view .git-commit-button {
 	background-color: var(--interactive-accent);
 	border-color: var(--interactive-accent);
-	color: white;
+	color: var(--text-on-accent);
 	font-weight: 500;
 }
 
 .git-source-control-view .git-commit-button:hover {
 	background-color: var(--interactive-accent-hover);
-	color: white;
+	color: var(--text-on-accent);
 }
 
 /* Diff view: inline diff colors */

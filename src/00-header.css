@@ -48,10 +48,16 @@ body {
 	--interactive-accent-hover: #4385BE;
 
 	/* Editor Settings */
-	--font-text-theme: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica", "Arial", sans-serif;
+	/* Reading font resolves through --reading-font (Style Settings: reading-font),
+	   falling back to the system sans stack. cjk-mode and style packs override
+	   --font-text-theme directly, so they win over this base selection.
+	   The UI chrome font is decoupled (kept system sans) so picking a serif
+	   reading font does not turn the whole interface serif. */
+	--font-system-ui: -apple-system, BlinkMacSystemFont, "Roboto", "Helvetica", "Arial", sans-serif;
+	--font-text-theme: var(--reading-font, var(--font-system-ui));
 	--font-editor-theme: var(--font-text-theme);
 	--font-monospace-theme: 'JetBrains Mono', 'Fira Code', Menlo, monospace;
-	--font-interface-theme: var(--font-text-theme);
+	--font-interface-theme: var(--font-system-ui);
 
 	--h1-size: clamp(1.7em, 1.55em + 0.3vw, 1.95em);
 	--h2-size: clamp(1.42em, 1.32em + 0.22vw, 1.6em);
@@ -61,7 +67,12 @@ body {
 	--h6-size: clamp(0.9em, 0.88em + 0.03vw, 0.95em);
 
 	/* Spacing & Layout */
-	--line-width: 42rem;
+	/* Reading column width resolves: advanced custom → tier select → base default.
+	   --line-width-custom / --line-width-tier are only ever written by Style Settings. */
+	--line-width: var(--line-width-custom, var(--line-width-tier, 42rem));
+	/* Bind to Obsidian's native readable-line-length variable so the width above
+	   (and every reading mode / style pack override) actually takes effect. */
+	--file-line-width: var(--line-width);
 	--line-height: 1.66;
 	--max-width: 88%;
 	--radius-s: 4px;
@@ -79,6 +90,18 @@ body {
 	--font-adaptive-small: var(--font-ui-small);
 	--input-height: 32px;
 
+	/* Component tokens */
+	--surface-raised: var(--background-primary-alt);
+	--surface-overlay: var(--background-primary);
+	--surface-sunken: var(--background-secondary-alt);
+	--shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.06);
+	--shadow-raised: 0 4px 14px rgba(0, 0, 0, 0.10);
+	--shadow-popover: 0 18px 40px rgba(0, 0, 0, 0.12);
+	--shadow-floating: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+	--text-on-accent: #FFFCF0;
+	--text-on-danger: #FFFCF0;
+	--text-on-success: #FFFCF0;
+
 	/* Style Settings defaults */
 	--link-decoration: underline;
 	--link-external-decoration: underline;
@@ -92,7 +115,7 @@ body {
 	--tag-background-color-l: #BDE1D3;
 	--tag-font-color-l: #1D694B;
 	--tag-background-color-d: #1D694B;
-	--tag-font-color-d: #FFFFFF;
+	--tag-font-color-d: #FFFCF0;
 	--progress-color-1: #ad5758;
 	--progress-color-2: #b87f4c;
 	--progress-color-3: #d2b874;
@@ -111,8 +134,20 @@ body {
 	--accent-amber-hover: #C48735;
 	--accent-sage: #4D7C6F;
 	--accent-sage-hover: #65A090;
+	--accent-ink-blue: #3E5C8A;
+	--accent-ink-blue-hover: #5A77A6;
+	--accent-clay: #A05A3F;
+	--accent-clay-hover: #BC7659;
+	--accent-slate: #5C6B73;
+	--accent-slate-hover: #76858D;
 
 	/* CJK Font Stacks */
 	--font-cjk-sc: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
 	--font-cjk-serif: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+
+	/* Western reading-font profiles (Style Settings: reading-font).
+	   Latin reading/writing surface only; UI chrome stays --font-system-ui. */
+	--font-western-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Source Serif Pro", Georgia, serif;
+	--font-western-modern: Georgia, Cambria, "Times New Roman", "Liberation Serif", serif;
+	--font-western-humanist: "Inter", "Helvetica Neue", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
 }

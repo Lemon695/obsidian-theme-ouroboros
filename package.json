@@ -17,6 +17,7 @@
 	"scripts": {
 		"build": "node build-theme.mjs",
 		"check": "node check-theme.mjs",
+		"sync:vault": "node sync-theme-to-vault.mjs",
 		"version": "node version-bump.mjs && git add manifest.json versions.json src/00-header.css theme.css"
 	}
 }
