@@ -110,15 +110,9 @@ body.fancy-code .markdown-reading-view pre[class*='language-']::before {
 	border-top-left-radius: calc(var(--codeblock-roundness) * 0.8);
 }
 
-body.fancy-code pre[class*='language-']::after {
-	content: attr(class);
-	font-size: 0.9rem;
-	text-shadow: none;
-	color: var(--text-muted);
-	position: absolute;
-	top: 2px;
-	right: 5px;
-}
+/* Clean language badge is provided by the M9-3 `code-language-label` section
+   below (curated names on code::before), replacing the old attr(class) label
+   that rendered the literal "language-xxx" string. */
 
 body.fancy-code .markdown-preview-view pre code {
 	padding: var(--size-4-1) var(--size-4-2);
@@ -316,17 +310,23 @@ code .cm-tag {
 	color: var(--atom-gray-2);
 }
 
+/* M9-3: stronger, calmer diff contrast — a left accent rail plus a slightly
+   deeper tint reads clearly without resorting to high-saturation green/red. */
 .token.inserted,
 .language-diff .token.inserted {
 	color: var(--color-green);
-	background-color: rgba(var(--color-green-rgb), 0.1);
+	background-color: rgba(var(--color-green-rgb), 0.14);
+	border-left: 2px solid rgba(var(--color-green-rgb), 0.55);
+	padding-left: 0.4em;
 	display: block;
 }
 
 .token.deleted,
 .language-diff .token.deleted {
 	color: var(--color-red);
-	background-color: rgba(var(--color-red-rgb), 0.1);
+	background-color: rgba(var(--color-red-rgb), 0.14);
+	border-left: 2px solid rgba(var(--color-red-rgb), 0.55);
+	padding-left: 0.4em;
 	display: block;
 }
 
@@ -334,15 +334,168 @@ code .cm-tag {
 .language-diff .token.chunk {
 	color: var(--color-cyan);
 	font-weight: 600;
-	background-color: rgba(var(--color-cyan-rgb), 0.07);
+	background-color: rgba(var(--color-cyan-rgb), 0.09);
+	border-left: 2px solid rgba(var(--color-cyan-rgb), 0.4);
+	padding-left: 0.4em;
 	display: block;
 }
 
 /* CodeMirror live-preview diff (git-style) */
 .cm-hmd-codeblock .cm-positive {
 	color: var(--color-green);
+	background-color: rgba(var(--color-green-rgb), 0.1);
 }
 
 .cm-hmd-codeblock .cm-negative {
 	color: var(--color-red);
+	background-color: rgba(var(--color-red-rgb), 0.1);
+}
+
+/* ─────────────────────────────────────────────────── */
+/* M9-3 Code block language label (Reading View) */
+/* Opt-out via Style Settings → Features → Code block    */
+/* language labels. Live Preview needs no badge — the    */
+/* ```lang fence text already shows the language.        */
+/* ─────────────────────────────────────────────────── */
+
+body.code-language-label .markdown-preview-view pre[class*='language-'] {
+	position: relative;
+}
+
+/* Badge box styling (no content here) — per-language rules below supply the
+   text, so unmapped languages render nothing instead of an empty pill. */
+body.code-language-label .markdown-preview-view pre[class*='language-'] > code::before {
+	position: absolute;
+	top: 0.35rem;
+	right: 0.5rem;
+	padding: 0.02rem 0.42rem;
+	border: 1px solid color-mix(in srgb, var(--background-modifier-border) 70%, transparent);
+	border-radius: 999px;
+	background-color: color-mix(in srgb, var(--background-primary) 86%, transparent);
+	color: var(--text-faint);
+	font-family: var(--font-interface);
+	font-size: 0.72em;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	line-height: 1.5;
+	pointer-events: none;
+	opacity: 0.9;
+	transition: opacity 120ms ease;
+}
+
+/* Fade the badge on hover so the copy button (top-right) is unobstructed. */
+body.code-language-label .markdown-preview-view pre[class*='language-']:hover > code::before {
+	opacity: 0;
+}
+
+body.code-language-label .markdown-preview-view pre.language-js > code::before,
+body.code-language-label .markdown-preview-view pre.language-javascript > code::before {
+	content: 'JS';
+}
+body.code-language-label .markdown-preview-view pre.language-ts > code::before,
+body.code-language-label .markdown-preview-view pre.language-typescript > code::before {
+	content: 'TS';
+}
+body.code-language-label .markdown-preview-view pre.language-jsx > code::before {
+	content: 'JSX';
+}
+body.code-language-label .markdown-preview-view pre.language-tsx > code::before {
+	content: 'TSX';
+}
+body.code-language-label .markdown-preview-view pre.language-py > code::before,
+body.code-language-label .markdown-preview-view pre.language-python > code::before {
+	content: 'Python';
+}
+body.code-language-label .markdown-preview-view pre.language-rb > code::before,
+body.code-language-label .markdown-preview-view pre.language-ruby > code::before {
+	content: 'Ruby';
+}
+body.code-language-label .markdown-preview-view pre.language-go > code::before {
+	content: 'Go';
+}
+body.code-language-label .markdown-preview-view pre.language-rs > code::before,
+body.code-language-label .markdown-preview-view pre.language-rust > code::before {
+	content: 'Rust';
+}
+body.code-language-label .markdown-preview-view pre.language-java > code::before {
+	content: 'Java';
+}
+body.code-language-label .markdown-preview-view pre.language-c > code::before {
+	content: 'C';
+}
+body.code-language-label .markdown-preview-view pre.language-cpp > code::before {
+	content: 'C++';
+}
+body.code-language-label .markdown-preview-view pre.language-cs > code::before,
+body.code-language-label .markdown-preview-view pre.language-csharp > code::before {
+	content: 'C#';
+}
+body.code-language-label .markdown-preview-view pre.language-php > code::before {
+	content: 'PHP';
+}
+body.code-language-label .markdown-preview-view pre.language-html > code::before {
+	content: 'HTML';
+}
+body.code-language-label .markdown-preview-view pre.language-css > code::before {
+	content: 'CSS';
+}
+body.code-language-label .markdown-preview-view pre.language-scss > code::before {
+	content: 'SCSS';
+}
+body.code-language-label .markdown-preview-view pre.language-json > code::before {
+	content: 'JSON';
+}
+body.code-language-label .markdown-preview-view pre.language-yml > code::before,
+body.code-language-label .markdown-preview-view pre.language-yaml > code::before {
+	content: 'YAML';
+}
+body.code-language-label .markdown-preview-view pre.language-toml > code::before {
+	content: 'TOML';
+}
+body.code-language-label .markdown-preview-view pre.language-sh > code::before,
+body.code-language-label .markdown-preview-view pre.language-shell > code::before,
+body.code-language-label .markdown-preview-view pre.language-bash > code::before {
+	content: 'Shell';
+}
+body.code-language-label .markdown-preview-view pre.language-sql > code::before {
+	content: 'SQL';
+}
+body.code-language-label .markdown-preview-view pre.language-md > code::before,
+body.code-language-label .markdown-preview-view pre.language-markdown > code::before {
+	content: 'Markdown';
+}
+body.code-language-label .markdown-preview-view pre.language-dockerfile > code::before {
+	content: 'Dockerfile';
+}
+body.code-language-label .markdown-preview-view pre.language-kotlin > code::before {
+	content: 'Kotlin';
+}
+body.code-language-label .markdown-preview-view pre.language-swift > code::before {
+	content: 'Swift';
+}
+body.code-language-label .markdown-preview-view pre.language-dart > code::before {
+	content: 'Dart';
+}
+body.code-language-label .markdown-preview-view pre.language-diff > code::before {
+	content: 'Diff';
+}
+
+/* ─────────────────────────────────────────────────── */
+/* M9-3 Copy button — clear hover/active by default */
+/* (previously only styled under fancy-code).            */
+/* ─────────────────────────────────────────────────── */
+
+.markdown-preview-view .copy-code-button {
+	transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.markdown-preview-view .copy-code-button:hover {
+	background-color: var(--background-modifier-hover);
+	border-color: color-mix(in srgb, var(--interactive-accent) 45%, var(--background-modifier-border));
+	color: var(--text-normal);
+}
+
+.markdown-preview-view .copy-code-button:active {
+	background-color: color-mix(in srgb, var(--interactive-accent) 16%, var(--background-primary));
+	color: var(--text-normal);
 }

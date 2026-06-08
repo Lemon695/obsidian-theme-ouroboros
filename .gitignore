@@ -13,3 +13,8 @@ node_modules
 
 # Exclude macOS Finder (System Explorer) View States
 .DS_Store
+.omx
+
+# Claude Code
+.claude/settings.local.json
+CLAUDE.local.md
