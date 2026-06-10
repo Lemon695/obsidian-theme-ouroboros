@@ -74,7 +74,6 @@ body {
 	   (and every reading mode / style pack override) actually takes effect. */
 	--file-line-width: var(--line-width);
 	--line-height: 1.66;
-	--max-width: 88%;
 	--radius-s: 4px;
 	--radius-xs: 3px;
 	--radius-m: 8px;
@@ -101,6 +100,13 @@ body {
 	--text-on-accent: #FFFCF0;
 	--text-on-danger: #FFFCF0;
 	--text-on-success: #FFFCF0;
+
+	/* Bullet threading tokens (M12). The indent unit mirrors Obsidian's
+	   default ~2em-per-level editor indent (tab size 4); users with a
+	   different tab size can retune it from a snippet. */
+	--ouroboros-thread-color: color-mix(in srgb, var(--interactive-accent) 62%, transparent);
+	--ouroboros-thread-width: 1.5px;
+	--ouroboros-thread-indent: 2em;
 
 	/* Style Settings defaults */
 	--link-decoration: underline;
@@ -859,6 +865,14 @@ body.cjk-mode {
 	--font-text-theme: var(--font-cjk-sc), -apple-system, BlinkMacSystemFont, sans-serif;
 	--font-editor-theme: var(--font-text-theme);
 	--font-interface-theme: var(--font-text-theme);
+}
+
+/* Line-breaking rules scoped to content surfaces only — `overflow-wrap:
+   anywhere` on the whole body let sidebar / settings UI labels break at
+   arbitrary points. */
+body.cjk-mode .markdown-rendered,
+body.cjk-mode .markdown-preview-view,
+body.cjk-mode .markdown-source-view.mod-cm6 .cm-content {
 	word-break: normal;
 	overflow-wrap: anywhere;
 	line-break: strict;
@@ -1000,6 +1014,156 @@ body.h2-underline .HyperMD-header.HyperMD-header-2.cm-line {
 	padding-bottom: 0.08rem;
 }
 
+/* ───────────────────────────────────────────────────
+   M12: Bullet threading (absorbed from the Logseq-style community snippet,
+   https://gist.github.com/itsonlyjames/6d149fa636ac0bc9e278e2eab0826257)
+   Draws a continuous accent thread from each ancestor bullet down to the
+   active list line, ending in a rounded elbow into its bullet.
+   DOM honesty (P-019): editor only (Live Preview + source mode) — Reading
+   View has no cursor, so a CSS-only theme cannot know the "current" item
+   there. CM6's flat line DOM carries depth as .HyperMD-list-line-N, so the
+   ancestor path is recovered with :has() + sibling combinators: the nearest
+   depth-N line before the active line (no same-depth line in between) is the
+   depth-N ancestor. Covered to 6 levels; deeper levels keep native guides.
+   Default-on; escapable via Style Settings → New Features.
+   The thread is static (no animation), so reduce-motion needs no override.
+   Known trade-off: on active list lines the elbow occupies ::before, which
+   takes precedence over the `active-line` rail (documented).
+   ─────────────────────────────────────────────────── */
+
+/* Per-mode anchors: Live Preview and source mode indent the first marker
+   differently; everything else derives from these two variables. */
+body.bullet-threading .markdown-source-view.mod-cm6 {
+	--ouroboros-thread-base: calc(12px + 0.15em);
+	--ouroboros-thread-elbow-height: calc(0.85em - var(--ouroboros-thread-width) / 2);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6:not(.is-live-preview) {
+	--ouroboros-thread-base: calc(3px + 0.15em);
+	--ouroboros-thread-elbow-height: calc(0.925em - var(--ouroboros-thread-width) / 2);
+}
+
+/* Column assignment, one group per ancestor depth. Each group positions:
+   the ancestor's downward tail (::after), the straight pass-through lines
+   between ancestor and the next path node (::before), the child path node's
+   elbow (::before), and tints the ancestor's bullet. */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-1:not(:has(~ .HyperMD-list-line-1 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-2, .HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-1:not(:has(~ .HyperMD-list-line-1 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-2, .HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active) .list-bullet,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-1:not(:has(~ .HyperMD-list-line-1 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-2.cm-active, ~ .HyperMD-list-line-2 ~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before {
+	--ouroboros-thread-offset: var(--ouroboros-thread-base);
+	--list-marker-color: var(--interactive-accent);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active) .list-bullet,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-3.cm-active, ~ .HyperMD-list-line-3 ~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before {
+	--ouroboros-thread-offset: calc(var(--ouroboros-thread-base) + var(--ouroboros-thread-indent));
+	--list-marker-color: var(--interactive-accent);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active) .list-bullet,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-4.cm-active, ~ .HyperMD-list-line-4 ~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before {
+	--ouroboros-thread-offset: calc(var(--ouroboros-thread-base) + 2 * var(--ouroboros-thread-indent));
+	--list-marker-color: var(--interactive-accent);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active) .list-bullet,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-5.cm-active, ~ .HyperMD-list-line-5 ~ .HyperMD-list-line-6.cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ .HyperMD-list-line-6.cm-active))::before {
+	--ouroboros-thread-offset: calc(var(--ouroboros-thread-base) + 3 * var(--ouroboros-thread-indent));
+	--list-marker-color: var(--interactive-accent);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)):has(~ .HyperMD-list-line-6.cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)):has(~ .HyperMD-list-line-6.cm-active) .list-bullet,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-6.cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-6:not(:has(~ .HyperMD-list-line-6 ~ .HyperMD-list-line.cm-active)).cm-active::before {
+	--ouroboros-thread-offset: calc(var(--ouroboros-thread-base) + 4 * var(--ouroboros-thread-indent));
+	--list-marker-color: var(--interactive-accent);
+}
+
+/* Drawing: ancestor tails — vertical run from below the bullet to the line
+   bottom. Task lines shorten the run so it never crosses the checkbox. */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line.HyperMD-task-line {
+	--ouroboros-thread-tail-max: 0.275em;
+	--ouroboros-thread-elbow-max: calc(var(--ouroboros-thread-indent) - 0.35em);
+}
+
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-1:not(:has(~ .HyperMD-list-line-1 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-2, .HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)):has(~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::after,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)):has(~ .HyperMD-list-line-6.cm-active)::after {
+	content: "";
+	position: absolute;
+	left: var(--ouroboros-thread-offset);
+	bottom: 0;
+	z-index: 0;
+	width: var(--ouroboros-thread-width);
+	height: min(calc(100% - 0.8em), var(--ouroboros-thread-tail-max, 100%));
+	border-radius: 999px;
+	background-color: var(--ouroboros-thread-color);
+}
+
+/* Drawing: straight pass-through segments on the lines between an ancestor
+   and the next path node. */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-1:not(:has(~ .HyperMD-list-line-1 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-2.cm-active, ~ .HyperMD-list-line-2 ~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-3.cm-active, ~ .HyperMD-list-line-3 ~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-4.cm-active, ~ .HyperMD-list-line-4 ~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-5.cm-active, ~ .HyperMD-list-line-5 ~ .HyperMD-list-line-6.cm-active)::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)) ~ .HyperMD-list-line:has(~ .HyperMD-list-line-6.cm-active)::before {
+	content: "";
+	position: absolute;
+	left: var(--ouroboros-thread-offset);
+	top: 0;
+	z-index: 0;
+	width: var(--ouroboros-thread-width);
+	height: 100%;
+	background-color: var(--ouroboros-thread-color);
+}
+
+/* Drawing: rounded elbows — the path node turns from the parent column into
+   its own bullet (the screenshot's curve). */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-2:not(:has(~ .HyperMD-list-line-2 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-3, .HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-3:not(:has(~ .HyperMD-list-line-3 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-4, .HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-4:not(:has(~ .HyperMD-list-line-4 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ :is(.HyperMD-list-line-5, .HyperMD-list-line-6).cm-active))::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-5:not(:has(~ .HyperMD-list-line-5 ~ .HyperMD-list-line.cm-active)):is(.cm-active, :has(~ .HyperMD-list-line-6.cm-active))::before,
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line-6:not(:has(~ .HyperMD-list-line-6 ~ .HyperMD-list-line.cm-active)).cm-active::before {
+	content: "";
+	position: absolute;
+	left: var(--ouroboros-thread-offset);
+	top: 0;
+	z-index: 0;
+	width: min(var(--ouroboros-thread-indent), var(--ouroboros-thread-elbow-max, var(--ouroboros-thread-indent)));
+	height: var(--ouroboros-thread-elbow-height);
+	background-color: transparent;
+	border-bottom: var(--ouroboros-thread-width) solid var(--ouroboros-thread-color);
+	border-left: var(--ouroboros-thread-width) solid var(--ouroboros-thread-color);
+	border-bottom-left-radius: var(--radius-m);
+}
+
+/* The active line's own bullet always joins the thread tint, including
+   top-level lines that have no elbow. */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line.cm-active .list-bullet {
+	--list-marker-color: var(--interactive-accent);
+}
+
+/* BUG-007: threads paint at z-index 0 — above the line's own background —
+   so the native "Highlight active line" backdrop (or a quote-line fill)
+   cannot swallow them. A negative z-index would sink the pseudo below any
+   line background because .cm-line is not a stacking context. List markers
+   are lifted one layer higher so the thread still never crosses bullets,
+   ordered-list numbers, or checkboxes. */
+body.bullet-threading .markdown-source-view.mod-cm6 .HyperMD-list-line :is(.list-bullet, .list-number, .task-list-item-checkbox) {
+	position: relative;
+	z-index: 1;
+}
+
 /* Link settings */
 .markdown-rendered .internal-link,
 .markdown-source-view.mod-cm6 .cm-hmd-internal-link {
@@ -1049,10 +1213,11 @@ body.h2-underline .HyperMD-header.HyperMD-header-2.cm-line {
 	padding-left: 0;
 }
 
+/* Hover feedback stays in-flow: the previous translateY(-1px) shifted an
+   inline element with no transition, causing abrupt text jitter. */
 .markdown-rendered .tag:hover,
 .markdown-source-view.mod-cm6 .cm-hashtag:hover {
-	filter: brightness(0.98);
-	transform: translateY(-1px);
+	filter: brightness(0.96);
 }
 
 .workspace-leaf-content[data-type='tag'] .tag-pane-tag {
@@ -3119,6 +3284,46 @@ without installing another snippet. */
 	background-color: var(--background-secondary);
 }
 
+/* ───────────────────────────────────────────────────
+   M12: Clean embeds (absorb Minimal's embed-strict idea)
+   Strips the card chrome from transclusions so an embedded note reads as
+   part of the host note — for long-form drafts assembled from fragments.
+   Opt-in two ways: globally via Style Settings (`embed-clean` toggle) or
+   per note via `cssclasses: embed-clean`. A quiet accent rail appears on
+   hover so embeds stay discoverable; the open-link icon keeps its
+   existing hover reveal.
+   ─────────────────────────────────────────────────── */
+
+body.embed-clean .markdown-embed,
+.markdown-preview-view.embed-clean .markdown-embed,
+.markdown-source-view.mod-cm6.embed-clean .markdown-embed {
+	border-left: none;
+	background-color: transparent;
+	border-radius: 0;
+	padding: 0;
+	margin: 0.3em 0;
+	transition: box-shadow 120ms ease;
+}
+
+body.embed-clean .markdown-embed-title,
+.markdown-preview-view.embed-clean .markdown-embed-title,
+.markdown-source-view.mod-cm6.embed-clean .markdown-embed-title {
+	display: none;
+}
+
+body.embed-clean .markdown-embed:hover,
+.markdown-preview-view.embed-clean .markdown-embed:hover,
+.markdown-source-view.mod-cm6.embed-clean .markdown-embed:hover {
+	box-shadow: inset 2px 0 0 color-mix(in srgb, var(--interactive-accent) 32%, transparent);
+}
+
+/* Nested embeds inherit the same flat surface instead of the darker card. */
+body.embed-clean .markdown-embed .markdown-embed,
+.markdown-preview-view.embed-clean .markdown-embed .markdown-embed,
+.markdown-source-view.mod-cm6.embed-clean .markdown-embed .markdown-embed {
+	background-color: transparent;
+}
+
 /* ─────────────────────────────────────────────────── */
 /* Custom Callout Types */
 /* ─────────────────────────────────────────────────── */
@@ -3885,15 +4090,17 @@ body.fancy-code
 
 body.fancy-code .cm-s-obsidian div.HyperMD-codeblock-begin-bg {
 	background-color: var(--code-block-alt-bg);
-	border: var(--codeblock-border);
+	/* BUG-003: --codeblock-border is a color token; the `border` shorthand needs
+	   an explicit style or border-style stays `none` and nothing renders. */
+	border: 1px solid var(--codeblock-border);
 	border-bottom: none;
 	border-top-right-radius: var(--codeblock-roundness);
 	border-top-left-radius: var(--codeblock-roundness);
 }
 
 body.fancy-code div.HyperMD-codeblock-bg:not(.HyperMD-codeblock-begin-bg) {
-	border-right: var(--codeblock-border);
-	border-left: var(--codeblock-border);
+	border-right: 1px solid var(--codeblock-border);
+	border-left: 1px solid var(--codeblock-border);
 }
 
 body.fancy-code .cm-line.HyperMD-codeblock .code-block-flair {
@@ -3942,7 +4149,7 @@ body.fancy-code .markdown-preview-view.markdown-preview-view pre {
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
 	padding: 0;
 	margin-top: var(--size-4-2);
-	border: var(--codeblock-border);
+	border: 1px solid var(--codeblock-border);
 	border-radius: var(--codeblock-roundness);
 }
 
@@ -4310,7 +4517,7 @@ body.code-language-label .markdown-preview-view pre.language-diff > code::before
 /* --------------------- */
 
 /* Fragile: Obsidian mobile does not expose a stable compose/new-note class here.
- * Re-check this selector against the current mobile DOM before release.
+ * Keep this selector audited in docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md.
  */
 body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
 .view-action:nth-last-of-type(2) {
@@ -4435,7 +4642,6 @@ input[data-task='<']:checked,
 li[data-task='<'] > input:checked,
 li[data-task='<'] > p > input:checked {
 	color: var(--text-faint);
-	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z' clip-rule='evenodd' /%3E%3C/svg%3E");
 	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z' clip-rule='evenodd' /%3E%3C/svg%3E");
 }
 
@@ -7426,6 +7632,18 @@ settings:
         level: 2
         collapsed: true
     -
+        title: Bullet threading
+        description: Draw a rounded accent thread from ancestor bullets down to the active list line (Logseq-style outline cue). Editor only — Reading View has no cursor. Covers 6 indent levels; assumes Obsidian's default tab size.
+        id: bullet-threading
+        type: class-toggle
+        default: true
+    -
+        title: Clean embeds
+        description: Strip the card chrome from embedded notes so transclusions read as part of the host note, with a quiet accent rail on hover. Also available per note via cssclasses 'embed-clean'. Opt-in.
+        id: embed-clean
+        type: class-toggle
+        default: false
+    -
         title: Active path emphasis
         description: Give the current note a warm low-noise cue — active tab title and top rail, the active pane's view-header title, and a quieter breadcrumb path. Only the current item is emphasized.
         id: active-path-emphasis
@@ -7507,7 +7725,7 @@ settings:
 
 /* Keep this list conservative. It should contain official core/community ids
  * with direct theme coverage or a documented selector-level compatibility pass.
- * Keep this list conservative and based on direct theme coverage or stable selector evidence.
+ * See docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md before adding ids.
  */
 
 /* @plugins
@@ -7642,17 +7860,13 @@ community:
 
 /* ─────────────────────────────────────────────────── */
 /* Callout Fold Animation */
+/* BUG-006: the previous max-height transition was dead code — Obsidian
+   toggles folded callout content at the display level, so a max-height
+   transition never plays, and the expanded state had no max-height to
+   transition from. The stray `overflow: hidden` also risked clipping
+   hover popovers inside callouts. Fold feedback is carried by the
+   fold-icon rotation in 01-foundation.css instead. */
 /* ─────────────────────────────────────────────────── */
-
-.callout-content {
-	overflow: hidden;
-	transition: max-height 240ms ease, opacity 200ms ease;
-}
-
-.callout.is-collapsed .callout-content {
-	max-height: 0;
-	opacity: 0;
-}
 
 /* ─────────────────────────────────────────────────── */
 /* Respect prefers-reduced-motion */

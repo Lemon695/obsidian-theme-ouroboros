@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720" role="img" aria-label="Warm paper abstract preview">
+  <rect width="1200" height="720" fill="#fff8e8"/>
+  <rect x="96" y="92" width="1008" height="536" rx="36" fill="#f1e5cc" stroke="#d1bb98" stroke-width="4"/>
+  <circle cx="284" cy="268" r="104" fill="#d39355" opacity="0.82"/>
+  <path d="M424 514 C562 312 652 420 752 266 C810 176 928 204 1000 300 L1000 564 L424 564 Z" fill="#5c7446" opacity="0.72"/>
+  <path d="M154 548 H1046" stroke="#8e5b2b" stroke-width="12" stroke-linecap="round" opacity="0.45"/>
+  <text x="154" y="164" fill="#21170f" font-family="Georgia, serif" font-size="42">Ouroboros Figure</text>
+</svg>

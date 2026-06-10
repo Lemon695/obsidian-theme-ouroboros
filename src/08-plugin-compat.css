@@ -4,7 +4,7 @@
 
 /* Keep this list conservative. It should contain official core/community ids
  * with direct theme coverage or a documented selector-level compatibility pass.
- * Keep this list conservative and based on direct theme coverage or stable selector evidence.
+ * See docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md before adding ids.
  */
 
 /* @plugins

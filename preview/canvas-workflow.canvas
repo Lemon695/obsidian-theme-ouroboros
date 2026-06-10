@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "group-discovery-cycle",
+      "type": "group",
+      "x": -80,
+      "y": -90,
+      "width": 880,
+      "height": 390,
+      "label": "Discovery cycle",
+      "color": "5"
+    },
+    {
+      "id": "node-decision",
+      "type": "text",
+      "x": 0,
+      "y": 0,
+      "width": 260,
+      "height": 190,
+      "text": "# Decision\n\nShip the semantic callout set as default CSS-only Markdown behavior.\n\n- Owner: theme\n- Tradeoff: less configuration, more portability",
+      "color": "6"
+    },
+    {
+      "id": "node-risk",
+      "type": "text",
+      "x": 330,
+      "y": 0,
+      "width": 260,
+      "height": 190,
+      "text": "# Risk\n\nCanvas selector drift can break visual polish after Obsidian updates.\n\nMitigation: keep modern selectors documented and tested in preview.",
+      "color": "2"
+    },
+    {
+      "id": "node-cycle",
+      "type": "text",
+      "x": 165,
+      "y": 240,
+      "width": 270,
+      "height": 170,
+      "text": "# Cycle\n\nObserve → decide → act → review.\n\nUse this canvas to check node, edge, group, controls, and minimap states.",
+      "color": "4"
+    },
+    {
+      "id": "node-insight",
+      "type": "text",
+      "x": 620,
+      "y": 210,
+      "width": 240,
+      "height": 150,
+      "text": "# Insight\n\nCanvas should feel like a quiet map, not a neon diagram tool.",
+      "color": "3"
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-decision-risk",
+      "fromNode": "node-decision",
+      "fromSide": "right",
+      "toNode": "node-risk",
+      "toSide": "left",
+      "label": "tradeoff"
+    },
+    {
+      "id": "edge-risk-cycle",
+      "fromNode": "node-risk",
+      "fromSide": "bottom",
+      "toNode": "node-cycle",
+      "toSide": "right",
+      "label": "mitigate"
+    },
+    {
+      "id": "edge-cycle-insight",
+      "fromNode": "node-cycle",
+      "fromSide": "right",
+      "toNode": "node-insight",
+      "toSide": "left",
+      "label": "review"
+    }
+  ]
+}

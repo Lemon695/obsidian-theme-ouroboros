@@ -74,7 +74,6 @@ body {
 	   (and every reading mode / style pack override) actually takes effect. */
 	--file-line-width: var(--line-width);
 	--line-height: 1.66;
-	--max-width: 88%;
 	--radius-s: 4px;
 	--radius-xs: 3px;
 	--radius-m: 8px;
@@ -101,6 +100,13 @@ body {
 	--text-on-accent: #FFFCF0;
 	--text-on-danger: #FFFCF0;
 	--text-on-success: #FFFCF0;
+
+	/* Bullet threading tokens (M12). The indent unit mirrors Obsidian's
+	   default ~2em-per-level editor indent (tab size 4); users with a
+	   different tab size can retune it from a snippet. */
+	--ouroboros-thread-color: color-mix(in srgb, var(--interactive-accent) 62%, transparent);
+	--ouroboros-thread-width: 1.5px;
+	--ouroboros-thread-indent: 2em;
 
 	/* Style Settings defaults */
 	--link-decoration: underline;

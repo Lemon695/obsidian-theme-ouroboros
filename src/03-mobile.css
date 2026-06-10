@@ -3,7 +3,7 @@
 /* --------------------- */
 
 /* Fragile: Obsidian mobile does not expose a stable compose/new-note class here.
- * Re-check this selector against the current mobile DOM before release.
+ * Keep this selector audited in docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md.
  */
 body.is-mobile:not(.floating-button-off):not(.advanced-toolbar)
 .view-action:nth-last-of-type(2) {

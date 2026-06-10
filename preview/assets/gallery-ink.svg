@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" role="img" aria-label="Night ink abstract preview">
+  <rect width="900" height="900" fill="#111419"/>
+  <circle cx="660" cy="204" r="96" fill="#7aa2f7" opacity="0.74"/>
+  <path d="M110 690 C240 484 332 586 456 392 C548 248 686 340 790 504 L790 790 L110 790 Z" fill="#7dcfdb" opacity="0.42"/>
+  <path d="M144 168 H528 M144 248 H452 M144 328 H594" stroke="#e9edf2" stroke-width="18" stroke-linecap="round" opacity="0.45"/>
+  <rect x="96" y="96" width="708" height="708" rx="48" fill="none" stroke="#445061" stroke-width="6"/>
+</svg>

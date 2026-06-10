@@ -80,15 +80,17 @@ body.fancy-code
 
 body.fancy-code .cm-s-obsidian div.HyperMD-codeblock-begin-bg {
 	background-color: var(--code-block-alt-bg);
-	border: var(--codeblock-border);
+	/* BUG-003: --codeblock-border is a color token; the `border` shorthand needs
+	   an explicit style or border-style stays `none` and nothing renders. */
+	border: 1px solid var(--codeblock-border);
 	border-bottom: none;
 	border-top-right-radius: var(--codeblock-roundness);
 	border-top-left-radius: var(--codeblock-roundness);
 }
 
 body.fancy-code div.HyperMD-codeblock-bg:not(.HyperMD-codeblock-begin-bg) {
-	border-right: var(--codeblock-border);
-	border-left: var(--codeblock-border);
+	border-right: 1px solid var(--codeblock-border);
+	border-left: 1px solid var(--codeblock-border);
 }
 
 body.fancy-code .cm-line.HyperMD-codeblock .code-block-flair {
@@ -137,7 +139,7 @@ body.fancy-code .markdown-preview-view.markdown-preview-view pre {
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
 	padding: 0;
 	margin-top: var(--size-4-2);
-	border: var(--codeblock-border);
+	border: 1px solid var(--codeblock-border);
 	border-radius: var(--codeblock-roundness);
 }
 

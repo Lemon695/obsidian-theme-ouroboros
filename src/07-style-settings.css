@@ -547,6 +547,18 @@ settings:
         level: 2
         collapsed: true
     -
+        title: Bullet threading
+        description: Draw a rounded accent thread from ancestor bullets down to the active list line (Logseq-style outline cue). Editor only — Reading View has no cursor. Covers 6 indent levels; assumes Obsidian's default tab size.
+        id: bullet-threading
+        type: class-toggle
+        default: true
+    -
+        title: Clean embeds
+        description: Strip the card chrome from embedded notes so transclusions read as part of the host note, with a quiet accent rail on hover. Also available per note via cssclasses 'embed-clean'. Opt-in.
+        id: embed-clean
+        type: class-toggle
+        default: false
+    -
         title: Active path emphasis
         description: Give the current note a warm low-noise cue — active tab title and top rail, the active pane's view-header title, and a quieter breadcrumb path. Only the current item is emphasized.
         id: active-path-emphasis

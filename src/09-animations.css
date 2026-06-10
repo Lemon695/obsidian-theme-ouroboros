@@ -91,17 +91,13 @@
 
 /* ─────────────────────────────────────────────────── */
 /* Callout Fold Animation */
+/* BUG-006: the previous max-height transition was dead code — Obsidian
+   toggles folded callout content at the display level, so a max-height
+   transition never plays, and the expanded state had no max-height to
+   transition from. The stray `overflow: hidden` also risked clipping
+   hover popovers inside callouts. Fold feedback is carried by the
+   fold-icon rotation in 01-foundation.css instead. */
 /* ─────────────────────────────────────────────────── */
-
-.callout-content {
-	overflow: hidden;
-	transition: max-height 240ms ease, opacity 200ms ease;
-}
-
-.callout.is-collapsed .callout-content {
-	max-height: 0;
-	opacity: 0;
-}
 
 /* ─────────────────────────────────────────────────── */
 /* Respect prefers-reduced-motion */

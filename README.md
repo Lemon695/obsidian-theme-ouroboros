@@ -28,6 +28,7 @@ Screenshot assets are kept in sync for release surfaces:
 
 - `screenshot.png` — 512×288 community-theme / README preview image.
 - `_resources/img/image-comparison-v1.png` — high-resolution source image used to regenerate `screenshot.png`.
+- `preview/CHECKLIST.md` — release-quality visual QA checklist to run before replacing screenshots or expanding README claims.
 
 ## Installation
 
@@ -67,6 +68,8 @@ Notable options include:
 - Task priority palette: an opt-in mode that maps Tasks-plugin priorities (highest…lowest) to the warm progress 5-color ramp as a quiet left rail, with a warm due chip — urgency reads warm-to-cool
 - Paper panes: an opt-in mode that turns editor tab groups into raised paper sheets (thin border, soft shadow, rounded corners) with a quiet accent lift on the active pane; sidebars stay flat
 - Typewriter focus: a Focus-mode sub-toggle that dims inactive lines and emphasizes the active line while editing, with centered composition room (Live Preview only)
+- Bullet threading: a default-on Logseq-style outline cue — a rounded accent thread connects every ancestor bullet down to the active list line (editor only, 6 indent levels)
+- Clean embeds: an opt-in mode (Style Settings toggle or per-note `embed-clean` cssclass) that strips the card chrome from transclusions so embedded notes read as part of the host note
 - Content helper classes: `cards`, `cards-cover`, `cards-compact`, `table-wide`, `table-small`, and `table-clean`
 - Low-noise navigation rails and current-path highlights for File Explorer / Bookmarks / Outline
 - Image / figure / gallery helpers: `img-grid`, `img-wide`, `img-frame`, and `figure-note`
@@ -82,9 +85,9 @@ Notable options include:
 
 ## Plugin and core view support
 
-Compatibility claims are tiered and conservative.
+Compatibility claims are tiered and conservative. See [`docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md`](./docs-code-ai/PLUGIN-COMPATIBILITY-AUDIT.md) for exact plugin ids, preview coverage, and fragile selector notes.
 
-Supported core/plugin surfaces:
+Preview-covered core/plugin surfaces:
 
 - Bases (core)
 - Properties / File properties / All properties (core)
@@ -111,11 +114,11 @@ Legacy selector-only:
 
 - DB Folder (`.db-table-view`; official plugin id was not present in the Obsidian community plugin directory during the M5-4 audit)
 
-If a plugin is not listed, it should still inherit Obsidian core tokens where possible, but it is not part of the dedicated compatibility claim surface yet.
+If a plugin is not listed, it should still inherit Obsidian core tokens where possible, but it is not part of the dedicated visual QA surface yet.
 
 ## Known limitations
 
-Known limitations and unsupported plugin claims, in short:
+Known limitations and unsupported plugin claims are tracked in [`docs-code-ai/KNOWN-LIMITATIONS.md`](./docs-code-ai/KNOWN-LIMITATIONS.md). Short version:
 
 - Selector-level integrations should be verified in your own vault before relying on exact plugin layout parity.
 - DB Folder is legacy selector-only and is not listed in theme metadata until an official plugin id and live DOM are confirmed.
@@ -137,7 +140,10 @@ The repository includes the modular source used to build the published theme.
 2. Edit the source files in [`src/`](./src/).
 3. Run `npm run build` to regenerate `theme.css`.
 4. Run `npm run check` to validate version metadata, Style Settings syntax, and build output.
-5. Review changes in Obsidian before updating screenshots or expanding compatibility claims.
+5. Optional: sync preview fixtures to a disposable vault with `npm run sync:vault -- /path/to/vault --preview`.
+6. Review changes in Obsidian using [`preview/CHECKLIST.md`](./preview/CHECKLIST.md) before updating screenshots or release notes.
+7. Review [`docs-code-ai/KNOWN-LIMITATIONS.md`](./docs-code-ai/KNOWN-LIMITATIONS.md) before expanding plugin claims.
+8. For release preparation, use [`docs-code-ai/RELEASE-CHECKLIST.md`](./docs-code-ai/RELEASE-CHECKLIST.md).
 
 ### Source structure
 
@@ -151,6 +157,39 @@ The repository includes the modular source used to build the published theme.
 - `src/07-style-settings.css`: Style Settings definitions
 - `src/08-plugin-compat.css`: plugin compatibility metadata
 - `src/09-animations.css`: motion and animation controls
+
+## Preview QA
+
+The preview suite is intentionally local-first and vault-friendly:
+
+- `preview/core-showcase.md` — typography, links, tags, callouts, tables, code, properties/frontmatter, prompt/sidebar notes
+- `preview/tasks-showcase.md` — checkbox states and progress bars
+- `preview/plugin-showcase.md` — Bases, Dataview, Calendar, Kanban, Canvas, Git, and plugin-facing surfaces
+- `preview/canvas-workflow.canvas` — Canvas nodes, groups, edges, labels, controls, color picker, and minimap
+- `preview/research-reading-showcase.md` — Research reading mode
+- `preview/longform-reading-showcase.md` — Longform reading mode
+- `preview/presets-showcase.md` — M6 style pack palette, rhythm, and accent override checks
+- `preview/reading-width-showcase.md` — M9 reading width tier, advanced custom width, and `--file-line-width` binding checks
+- `preview/reading-font-showcase.md` — M10 reading font profile checks (serif/Western `variable-select`, body+editor only, UI chrome stays sans, CJK/pack precedence)
+- `preview/numbered-headings-showcase.md` — M9 numbered headings (H1–H4) in Reading View and Live Preview, per-note reset, callout exclusion
+- `preview/code-block-showcase.md` — M9 code-block language labels, copy-button hover/active, and diff contrast checks
+- `preview/nested-tags-showcase.md` — M9 nested-tag cue and tag-pane nesting guide checks
+- `preview/graph-view-showcase.md` — M9 graph warm-paper, focused node, current-note ring, and quiet-link checks
+- `preview/highlight-pens-showcase.md` — M10 multi-color highlight pen checks (8 colors, light/dark)
+- `preview/accent-paper-showcase.md` — M10 expanded accent palette and paper-temperature checks
+- `preview/active-path-showcase.md` — M10 current-path / active-note emphasis checks (active tab, pane title, breadcrumb)
+- `preview/dashboard-showcase.md` — M10 daily/periodic dashboard layout checks (`dashboard` cssclass, widget panels, cards composition)
+- `preview/task-priority-showcase.md` — M10 task priority palette checks (opt-in, `data-task-priority` mapped to progress 5-color ramp, warm due chip)
+- `preview/paper-panes-showcase.md` — M10 paper panes checks (opt-in, editor tab groups as raised sheets, active-pane accent lift, sidebars stay flat)
+- `preview/typewriter-focus-showcase.md` — M10 typewriter focus checks (Focus-mode sub-toggle, dim inactive lines, active-line emphasis, centered room, Live Preview only)
+- `preview/bullet-threading-showcase.md` — M12 bullet threading checks (default-on, rounded accent thread to the active list line, editor only)
+- `preview/clean-embeds-showcase.md` — M12 clean embeds checks (opt-in toggle / `embed-clean` cssclass, chrome-free transclusions, hover rail)
+- `preview/content-helpers-showcase.md` — M6 cards, table, and Dataview helper classes
+- `preview/navigation-showcase.md` — M6 folder rail, current-path, and tree navigation checks
+- `preview/image-figure-gallery-showcase.md` — M6 image grid, wide image, frame, and figure caption checks
+- `preview/focus-mode-showcase.md` — Focus mode 2.0, Keyboard mode, hover/focus recovery, and command/switcher hints
+- `preview/publish-print-showcase.md` — M6 Publish / Print / PDF export checks
+- `preview/CHECKLIST.md` — manual release-quality gate for light/dark, Style Settings variants, mobile/accessibility, plugin workbench checks, screenshots, and sign-off evidence
 
 ## Contributing
 
